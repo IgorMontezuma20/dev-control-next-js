@@ -11,7 +11,7 @@ export function Header() {
           </h1>
         </Link>
 
-        <div className="flex items-baseline gap-4">
+        <div className="flex items-baseline gap-4 ">
           <Link href="/dashboard">
             <FiUser size={26} color="#4b5563" />
           </Link>
