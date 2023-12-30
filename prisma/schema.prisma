@@ -6,6 +6,81 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String
+  address   String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  Ticket    Ticket[]
+
+  userId String? @db.ObjectId
+  User   User?   @relation(fields: [userId], references: [id])
+}
+
+model Ticket {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  status      String
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  Customer    Customer? @relation(fields: [customerId], references: [id])
+  customerId  String?   @db.ObjectId
+
+  userId String? @db.ObjectId
+  User   User?   @relation(fields: [userId], references: [id])
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  tickets       Ticket[]
+  customers     Customer[]
+}
+
+model VerificationToken {
+  identifier String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
