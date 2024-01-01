@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { FiUser, FiLogOut, FiLoader, FiLock } from "react-icons/fi";
+import { FiUser, FiList, FiLogOut, FiLoader, FiLock } from "react-icons/fi";
 
 export function Header() {
   const { status, data } = useSession();
@@ -27,24 +27,24 @@ export function Header() {
 
         {status === "loading" && (
           <button className="animate-spin">
-            <FiLoader size={26} color="#4b5563" />
+            <FiLoader size={26} color="#3f84e6" />
           </button>
         )}
 
         {status === "unauthenticated" && (
           <button onClick={handleLogin}>
-            <FiLock size={26} color="#4b5563" />
+            <FiLock size={26} color="#3f84e6" />
           </button>
         )}
 
         {status === "authenticated" && (
           <div className="flex items-baseline gap-4 ">
             <Link href="/dashboard">
-              <FiUser size={26} color="#0e52b3" />
+              <FiList size={26} color="#3f84e6" />
             </Link>
 
             <button onClick={handleLogout}>
-              <FiLogOut size={26} color="#ee3528" />
+              <FiLogOut size={26} color="#fd594a" />
             </button>
           </div>
         )}
