@@ -21,6 +21,7 @@ export default function Home() {
         className="text-right 
         mb-6
         mr-6
+        bg-white shadow-md
       "
       >
         <Link

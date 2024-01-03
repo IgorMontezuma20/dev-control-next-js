@@ -1,4 +1,5 @@
 import { DashboardHeader } from "@/app/dashboard/components/header";
+import { DashboardFooter } from "./components/footer";
 
 export default function Dashboardlayout({
   children,
@@ -9,6 +10,7 @@ export default function Dashboardlayout({
     <>
       <DashboardHeader />
       {children}
+      <DashboardFooter />
     </>
   );
 }
