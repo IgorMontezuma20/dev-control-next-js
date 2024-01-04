@@ -19,7 +19,7 @@ export default async function Customer() {
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Clientes</h1>
           <Link
-            className="bg-blue-500 text-white rounded px-4 py-1 hover:bg-blue-600 duration-300"
+            className="bg-blue-500 text-white rounded px-4 py-1 hover:scale-105 duration-300"
             href="/dashboard/customer/new"
           >
             Novo Cliente

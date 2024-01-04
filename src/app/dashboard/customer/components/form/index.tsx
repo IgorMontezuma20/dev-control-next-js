@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/input";
 
 const schema = z.object({
   name: z.string().min(3, "O campo nome é obrigatório!").max(255),
@@ -37,11 +38,62 @@ export function NewCustomerForm() {
     resolver: zodResolver(schema),
   });
 
+  function handleCustomerRegister(data: FormData) {
+    console.log(data);
+  }
+
   return (
     <>
-      <form>
-        <label>Nome Completo</label>
-        <input type="text" placeholder="Informe o nome completo..." />
+      <form
+        className="flex flex-col mt-6"
+        onSubmit={handleSubmit(handleCustomerRegister)}
+      >
+        <label className="mb-1 text-lg font-medium">Nome Completo</label>
+        <Input
+          type="text"
+          name="name"
+          placeholder="Informe seu nome completo..."
+          error={errors.name?.message}
+          register={register}
+        />
+        <section className="flex flex-col sm:flex-row my-2 gap-2">
+          <div className="flex-1">
+            <label className="mb-1 text-lg font-medium">Telefone: </label>
+            <Input
+              type="text"
+              name="phone"
+              placeholder="EX: (99) 99999-9999"
+              error={errors.phone?.message}
+              register={register}
+            />
+          </div>
+          <div className="flex-1">
+            <label className="mb-1 text-lg font-medium">Email: </label>
+            <Input
+              type="email"
+              name="email"
+              placeholder="Informe seu email..."
+              error={errors.email?.message}
+              register={register}
+            />
+          </div>
+        </section>
+
+        <label className="mb-1 text-lg font-medium">Endereço: </label>
+        <Input
+          type="text"
+          name="address"
+          placeholder="Informe seu endereço..."
+          error={errors.address?.message}
+          register={register}
+        />
+
+        <button
+          className="bg-blue-500 my-4 px-2 h-11 rounded text-white font-bold hover:scale-105 duration-300"
+          type="submit"
+        >
+          Cadastrar
+        </button>
       </form>
     </>
   );
