@@ -16,10 +16,10 @@ export default async function Dashboard() {
   return (
     <Container>
       <main className="mt-9 mb-2 overflow-hidden h-full">
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between mr-1">
           <h1 className="text-3xl font-bold">Chamados</h1>
           <Link
-            className="bg-blue-500 px-4 py-1 rounded text-white"
+            className="bg-blue-500  text-white rounded ml-1 px-4 py-1 hover:scale-105 duration-300"
             href="/dashboard/new"
           >
             Novo Chamado

@@ -3,7 +3,11 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useRouter } from "next/navigation";
+
 import { Input } from "@/components/input";
+import { api } from "@/lib/api";
 
 const schema = z.object({
   name: z.string().min(3, "O campo nome é obrigatório!").max(255),
@@ -29,7 +33,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export function NewCustomerForm() {
+export function NewCustomerForm({ userId }: { userId: string }) {
   const {
     register,
     handleSubmit,
@@ -38,8 +42,19 @@ export function NewCustomerForm() {
     resolver: zodResolver(schema),
   });
 
-  function handleCustomerRegister(data: FormData) {
-    console.log(data);
+  const router = useRouter();
+
+  async function handleCustomerRegister(data: FormData) {
+    await api.post("/api/customer", {
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
+      userId: userId,
+    });
+
+    router.replace("/dashboard/customer");
+    router.refresh();
   }
 
   return (
