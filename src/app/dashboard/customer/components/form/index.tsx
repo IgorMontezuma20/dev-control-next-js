@@ -25,9 +25,10 @@ const schema = z.object({
       );
     },
     {
-      message: "O númeero de telefone deve conter 11 dígitos!",
+      message: "O número de telefone deve conter 11 dígitos!",
     }
   ),
+
   address: z.string(),
 });
 
