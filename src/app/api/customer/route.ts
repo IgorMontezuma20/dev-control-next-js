@@ -43,6 +43,16 @@ export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("id");
 
+  const findTickets = await prismaClient.ticket.findFirst({
+    where: {
+      customerId: userId as string,
+    },
+  });
+
+  if(findTickets) {
+    return NextResponse.json({ error: "Erro ao remover cliente, pois há chamados associados ao mesmo." }, { status: 400 });
+  }
+
   try {
     await prismaClient.customer.delete({
       where: {

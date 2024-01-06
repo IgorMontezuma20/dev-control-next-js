@@ -37,6 +37,12 @@ export default async function Customer() {
             <CardCustomer key={customer.id} customer={customer} />
           ))}
         </section>
+
+        {!customers.length && (
+          <div className="flex items-center justify-center mt-4">
+            <p className="text-xl text-gray-600">Nenhum cliente cadastrado</p>
+          </div>
+        )}
       </main>
     </Container>
   );
