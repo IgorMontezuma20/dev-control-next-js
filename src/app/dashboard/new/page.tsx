@@ -1,7 +1,24 @@
-import { Container } from "@/components/container";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function NewTicket() {
+import { Container } from "@/components/container";
+import { authOptions } from "@/lib/auth";
+import prismaClient from "@/lib/prisma";
+
+export default async function NewTicket() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    redirect("/");
+  }
+
+  const customers = await prismaClient.customer.findMany({
+    where: {
+      userId: session.user.id,
+    },
+  });
+
   return (
     <>
       <Container>
@@ -32,13 +49,41 @@ export default function NewTicket() {
               placeholder="Descreva o problema..."
               required
             ></textarea>
+            {customers.length !== 0 && (
+              <>
+                <label className="mb-1 font-medium text-lg">
+                  Informe o cliente
+                </label>
+                <select className="w-full border-2 rounded-md px-2 mb-2 h-11 bg-white">
+                  {customers.map((customer) => (
+                    <option key={customer.id} value={customer.id}>
+                      {customer.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
 
-            <label className="mb-1 font-medium text-lg">
-              Informe o cliente
-            </label>
-            <select className="w-full border-2 rounded-md px-2 mb-2 h-11 bg-white">
-              <option value="cliente1">Cliente 1</option>
-            </select>
+            {customers.length === 0 && (
+              <>
+                <h2 className="mb-1 font-medium text-gray-500">
+                  Você ainda não possui clientes cadastrados.
+                  <Link href="/dashboard/customer/new">
+                    <span className="px-1 text-blue-500 font-medium hover:text-blue-700 duration-300">
+                      Cadastrar cliente
+                    </span>
+                  </Link>
+                </h2>
+              </>
+            )}
+
+            <button
+              className="bg-blue-500 text-white font-bold px-2 h-11 rounded-md my-4 hover:scale-105 duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              type="submit"
+              disabled={customers.length === 0}
+            >
+              Cadastrar
+            </button>
           </form>
         </main>
       </Container>
