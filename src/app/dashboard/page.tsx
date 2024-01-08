@@ -25,8 +25,6 @@ export default async function Dashboard() {
     },
   });
 
-  console.log(tickets);
-
   return (
     <Container>
       <main className="mt-9 mb-2 overflow-hidden h-full">
@@ -63,6 +61,11 @@ export default async function Dashboard() {
             ))}
           </tbody>
         </table>
+        {tickets.length === 0 && (
+          <>
+            <h1 className="px-2  text-gray-600">Nenhum chamado aberto</h1>
+          </>
+        )}
       </main>
     </Container>
   );
