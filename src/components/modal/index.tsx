@@ -5,7 +5,7 @@ import { useRef, useContext, MouseEvent } from "react";
 import { ModalContext } from "@/providers/modal";
 
 export function TicketModal() {
-  const { handleModalVisible } = useContext(ModalContext);
+  const { handleModalVisible, ticket } = useContext(ModalContext);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const handleModalClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -38,34 +38,41 @@ export function TicketModal() {
           <div className="flex flex-col flex-wrap gap- mb-2">
             <div className="flex">
               <h2 className="font-bold ">Nome:</h2>
-              <p className="ml-2">Erro</p>
+              <p className="ml-2">{ticket?.ticket.name}</p>
 
               <h2 className="font-bold ml-40 hidden sm:block">Data:</h2>
-              <p className="ml-2 hidden sm:block">08/01/2024</p>
+              <p className="ml-2 hidden sm:block">
+                {ticket?.ticket.createdAt &&
+                  ticket?.ticket.createdAt.toLocaleDateString("pt-br")}
+              </p>
             </div>
             <div className="flex flex-wrap flex-col gap-1 mb-2 mt-2">
               <h2 className="font-bold">Descrição</h2>
-              <p>Aqui ficará a descrição</p>
+              <p>{ticket?.ticket.description}</p>
             </div>
             <div className="w-full border-b-[1.5px] my-4"></div>
             <h1 className="font-bold text-lg mb-4">Detalhes do cliente</h1>
           </div>
           <div className="flex flex-wrap gap- mb-2">
             <h2 className="font-bold ">Cliente:</h2>
-            <p className="ml-2">Teste</p>
+            <p className="ml-2">{ticket?.customer?.name}</p>
           </div>
           <div className="flex flex-wrap gap- mb-2">
             <h2 className="font-bold ">Telefone:</h2>
-            <p className="ml-2">99999999999</p>
+            <p className="ml-2">{ticket?.customer?.phone}</p>
           </div>
           <div className="flex flex-wrap gap- mb-2">
             <h2 className="font-bold ">Email:</h2>
-            <p className="ml-2">teste@teste.com</p>
+            <p className="ml-2">{ticket?.customer?.email}</p>
           </div>
-          <div className="flex flex-wrap gap- mb-2">
-            <h2 className="font-bold ">Endereço:</h2>
-            <p className="ml-2">Rua teste</p>
-          </div>
+          {ticket?.customer?.address && (
+            <>
+              <div className="flex flex-wrap gap- mb-2">
+                <h2 className="font-bold ">Endereço:</h2>
+                <p className="ml-2">{ticket?.customer?.address}</p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
