@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/input";
+import { TicketForm } from "./components/ticketForm";
 
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 
 const schema = z.object({
   email: z
@@ -24,10 +25,7 @@ interface CustomerDataInfo {
 }
 
 export default function OpenTicket() {
-  const [customer, setCustomer] = useState<CustomerDataInfo | null>({
-    id: "1",
-    name: "Igor",
-  });
+  const [customer, setCustomer] = useState<CustomerDataInfo | null>(null);
 
   const {
     register,
@@ -38,12 +36,27 @@ export default function OpenTicket() {
     resolver: zodResolver(schema),
   });
 
+  function handleClearCustomer() {
+    setCustomer(null);
+    setValue("email", "");
+  }
+
   return (
     <div className="w-full max-w-2xl mx-auto px-2">
       <h1 className="font-bold text-3xl text-center mt-24">Abrir chamado</h1>
       <main className="flex- flex-col mt-4 mb-2">
         {customer ? (
-          <div></div>
+          <div className="flex items-center justify-between bg-slate-200 py-6 px-4 rounded border-2">
+            <p className="text-lg">
+              <strong>Cliente selecionado: {customer.name} </strong>
+            </p>
+            <button
+              className="flex items-center justify-center h-11 px-2 rounded hover:scale-125 duration-300"
+              onClick={handleClearCustomer}
+            >
+              <FiX size={30} color="#ff2929" />
+            </button>
+          </div>
         ) : (
           <form className="bg-slate-200 py-6 px-2 rounded border-2">
             <div className="flex flex-col gap-3">
@@ -62,6 +75,8 @@ export default function OpenTicket() {
             </div>
           </form>
         )}
+
+        {customer !== null && <TicketForm />}
       </main>
     </div>
   );
