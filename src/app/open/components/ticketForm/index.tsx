@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -36,7 +36,8 @@ export function TicketForm({ customer }: TicketFormProps) {
       customerId: customer.id,
     });
 
-    
+    setValue("name", "");
+    setValue("description", "");
   }
 
   return (
