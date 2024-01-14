@@ -4,7 +4,7 @@ export interface CustomerProps{
     email: string;
     phone: string;
     address: string | null;
-    createdAt: Date | null;
-    updatedAt: Date | null;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
     userId: string | null;
 }
