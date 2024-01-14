@@ -9,9 +9,9 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId:"357058581474-jp7aumde2cp6pe6mbenkuetrm52epg8a.apps.googleusercontent.com",
       clientSecret: "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"
-    })
+    }),
   ],
-  secret: "projeto123",
+  secret: process.env.NEXT_AUTH_SECRET,
   callbacks: {
     async session({ session, token, user, }){
       session.user = { ...session.user, id: user.id } as {
