@@ -3,8 +3,8 @@ export interface TicketProps{
     name: string;
     description: string;
     status: string;
-    createdAt: Date | null;
-    updatedAt: Date | null;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
     customerId: string | null;
     userId: string | null;
 }
