@@ -42,8 +42,8 @@ export function TicketModal() {
 
               <h2 className="font-bold ml-40 hidden sm:block">Data:</h2>
               <p className="ml-2 hidden sm:block">
-                {ticket?.ticket.createdAt &&
-                  ticket?.ticket.createdAt.toLocaleDateString("pt-br")}
+                {ticket?.ticket.created_at &&
+                  ticket?.ticket.created_at.toLocaleDateString("pt-br")}
               </p>
             </div>
             <div className="flex flex-wrap flex-col gap-1 mb-2 mt-2">

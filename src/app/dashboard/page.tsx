@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import { Container } from "@/components/container";
-import { Ticketitem } from "@/app/dashboard/components/ticket";
+import { TicketItem } from "@/app/dashboard/components/ticket";
 import { RefreshButton } from "./components/refreshButton";
 
 import { authOptions } from "@/lib/auth";
@@ -60,13 +60,11 @@ export default async function Dashboard() {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <>
-                <Ticketitem
-                  key={ticket.id}
-                  customer={ticket.customer}
-                  ticket={ticket}
-                />
-              </>
+              <TicketItem
+                key={ticket.id}
+                customer={ticket.customer}
+                ticket={ticket}
+              />
             ))}
           </tbody>
         </table>
